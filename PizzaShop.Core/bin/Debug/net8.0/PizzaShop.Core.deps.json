@@ -1200,10 +1200,7 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.0"
         },
         "runtime": {
-          "PizzaShop.Repository.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "PizzaShop.Repository.dll": {}
         }
       },
       "PizzaShop.Service/1.0.0": {
@@ -1217,10 +1214,7 @@
           "System.IdentityModel.Tokens.Jwt": "8.6.0"
         },
         "runtime": {
-          "PizzaShop.Service.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "PizzaShop.Service.dll": {}
         }
       }
     }

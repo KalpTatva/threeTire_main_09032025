@@ -8,6 +8,7 @@ using PizzaShop.Service.Interfaces;
 
 namespace PizzaShop.Core.Controllers;
 
+
 public class HomeController : Controller
 {
     private readonly IEmailService _emailService;

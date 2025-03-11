@@ -7691,19 +7691,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pandy\\.nuget\\packages\\": {}
+    "C:\\Users\\pca117\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj",
+      "projectUniqueName": "D:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj",
       "projectName": "PizzaShop.Repository",
-      "projectPath": "F:\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj",
-      "packagesPath": "C:\\Users\\pandy\\.nuget\\packages\\",
-      "outputPath": "F:\\threeTire_main_09032025\\PizzaShop.Repository\\obj\\",
+      "projectPath": "D:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj",
+      "packagesPath": "C:\\Users\\pca117\\.nuget\\packages\\",
+      "outputPath": "D:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pandy\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\pca117\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -7777,7 +7777,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

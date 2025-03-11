@@ -172,10 +172,18 @@ namespace PizzaShop.Repository.Implementations
         {
             return await _context.Items.Where(u => u.Isdeleted == false).OrderBy(u => u.Itemid).ToListAsync();
         }
+        public async Task<List<Modifier>> GetAllModifierAsync()
+        {
+            return await _context.Modifiers.Where(u => u.Isdeleted == false).OrderBy(u => u.Modifierid).ToListAsync();
+        }
 
         public async Task<List<Item>> GetItemsByCategoryAsync(int? id)
         {
             return await _context.Items.Where(u => u.Isdeleted == false && u.Categoryid == id ).OrderBy(u => u.Itemid).ToListAsync();
+        }
+        public async Task<List<Modifier>> GetModifiersByMGAsync(int? id)
+        {
+            return await _context.Modifiers.Where(u => u.Isdeleted == false && u.Modifiergroupid == id ).OrderBy(u => u.Modifierid).ToListAsync();
         }
 
         

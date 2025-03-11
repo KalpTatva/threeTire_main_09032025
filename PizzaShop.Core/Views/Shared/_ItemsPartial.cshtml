@@ -1,5 +1,8 @@
 @model PizzaShop.Repository.ModelView.MenuWithItemsViewModel
-
+@{
+    bool canEdit = ViewBag.permission[2].Canedit;
+    bool canDelete = ViewBag.permission[2].Candelete;
+}
 <div class="p-2" id="itemsContainer" data-total-items="@Model.TotalItems">
     @if (Model.Items != null && Model.Items.Any())
     {
@@ -48,13 +51,23 @@
                         <td>@i.Rate</td>
                         <td><div class="mx-3">@i.Quantity</div></td>
                         <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" @(i.Isavailabe == true ? "checked" : "") id="flexSwitchCheckDefault_@i.Itemid">
-                            </div>
-                        </td>
+    <div class="form-check form-switch">
+        <input class="form-check-input available-switch" 
+               data-item-id="@i.Itemid" 
+               data-available="@i.Isavailabe" 
+               type="checkbox" 
+               role="switch" 
+               @(i.Isavailabe == true ? "checked" : "") 
+               id="flexSwitchCheckDefault_@i.Itemid">
+    </div>
+</td>
                         <td>
+                            @if(canEdit == true) {
                             <a data-bs-toggle="modal" data-bs-target="#editModal-@i.Itemid"><i class="bi bi-pen mx-1"></i></a>
+                            }
+                            @if(canDelete == true) {
                             <a data-bs-toggle="modal" data-bs-target="#staticBackdrop1-@i.Itemid"><i class="bi bi-trash"></i></a>
+                            }
                         </td>
                     </tr>
 
@@ -232,3 +245,36 @@
 </div>
 
 <!-- Pagination (unchanged) -->
+ 
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('change', '.available-switch', function(e) {
+                var itemId = $(this).data('item-id');
+                var available = $(this).is(':checked'); // Use the checkbox's current state
+                
+                $.ajax({
+                    url: '@Url.Action("IsAvailableUpdate", "Menu")',
+                    type: 'POST',
+                    data: { 
+                        itemId: itemId,
+                        available: available 
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            alert("Change successfully done");
+                        } else {
+                            alert("Error: " + data.data);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error in IsAvailableUpdate controller: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+}

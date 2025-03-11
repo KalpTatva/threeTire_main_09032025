@@ -32,13 +32,13 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="nav-home">
                     @* CATEGORY PARTIAL VIEW *@
-                    @Html.Partial("_ModifiersPartial",Model)
+                    @Html.Partial("_CategoryPartial",Model) 
                 </div>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="nav-home">
                     @* MODIFIER PARTIAL VIEW *@
-                    @Html.Partial("_CategoryPartial",Model) 
+                    @Html.Partial("_ModifiersGroupPartial",Model)
                 </div>
             </div>
         </div>

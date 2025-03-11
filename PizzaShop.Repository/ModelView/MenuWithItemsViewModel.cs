@@ -27,12 +27,20 @@ public class MenuWithItemsViewModel
     [Required]
     public int Modifiergroupid {get; set;}
     public int itemid { get; set; }
+    public int modiferid {get; set;}
     public ItemsViewModel? item { get; set; }
+    public ModifiersViewModel? modifiersViewModel {get; set;}
     public List<Category>? Categories { get; set; }
     public List<Item>? Items { get; set; }
+    public List<Modifier>? Modifiers { get; set; }
     public List<Modifiergroup>? modifiergroups {get; set;}
     public int CurrentPage { get; set; }
     public int PageSize { get; set; }
     public int TotalItems { get; set; }
+
+
+    public int CurrentPage1 { get; set; }
+    public int PageSize1 { get; set; }
+    public int TotalItems1 { get; set; }
 }
 

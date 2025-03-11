@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using PizzaShop.Core;
@@ -11,6 +12,10 @@ using PizzaShop.Repository.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PizzaShop.Core.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +26,10 @@ builder.Services.AddControllersWithViews();
 //SERVICES  
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped<IUserService, UserService >();
-builder.Services.AddScoped<IUserTableService, UserTableService >();
-builder.Services.AddScoped<IRoleService, RoleService >();
-builder.Services.AddScoped<IMenuService, MenuService >();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserTableService, UserTableService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
 
 //FILTERS
 builder.Services.AddScoped<AuthorizePermissionUserTable>();
@@ -39,12 +44,48 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 //      DependencyInjection.RegisterServices(builder.Services, connectionString!);
 
+// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//     .AddJwtBearer(options =>
+//     {
+//         options.TokenValidationParameters = new TokenValidationParameters
+//         {
+//             ValidateIssuer = true,
+//             ValidateAudience = true,
+//             ValidateLifetime = true,
+//             ValidateIssuerSigningKey = true,
+//             ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//             ValidAudience = builder.Configuration["Jwt:Audience"],
+//             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//         };
+//         options.Events = new JwtBearerEvents
+//         {
+//             OnMessageReceived = context =>
+//             {
+//                 if (context.Request.Cookies.ContainsKey("auth_token"))
+//                 {
+//                     context.Token = context.Request.Cookies["auth_token"];
+//                     // Access HttpContext.Items instead of context.Items
+//                     var user = context.HttpContext.User;
+//                     context.HttpContext.Items["UserRole"] = user.FindFirst(ClaimTypes.Role)?.Value;
+//                     context.HttpContext.Items["UserEmail"] = user.FindFirst(ClaimTypes.Email)?.Value;
+//                 }
+//                 return Task.CompletedTask;
+//             },
+//             OnChallenge = context =>
+//             {
+//                 context.HandleResponse();
+//                 context.Response.Redirect("/Home/Index");
+//                 return Task.CompletedTask;
+//             }
+//         };
+//     });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Privacy");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

@@ -6953,19 +6953,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pandy\\.nuget\\packages\\": {}
+    "C:\\Users\\pca117\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\threeTire_main_09032025\\PizzaShop.Service\\PizzaShop.Service.csproj",
+      "projectUniqueName": "d:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Service\\PizzaShop.Service.csproj",
       "projectName": "PizzaShop.Service",
-      "projectPath": "F:\\threeTire_main_09032025\\PizzaShop.Service\\PizzaShop.Service.csproj",
-      "packagesPath": "C:\\Users\\pandy\\.nuget\\packages\\",
-      "outputPath": "F:\\threeTire_main_09032025\\PizzaShop.Service\\obj\\",
+      "projectPath": "d:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Service\\PizzaShop.Service.csproj",
+      "packagesPath": "C:\\Users\\pca117\\.nuget\\packages\\",
+      "outputPath": "d:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Service\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pandy\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\pca117\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -6977,8 +6977,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "F:\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj": {
-              "projectPath": "F:\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj"
+            "d:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj": {
+              "projectPath": "d:\\pizzaShop_10032025\\threeTire_main_09032025\\PizzaShop.Repository\\PizzaShop.Repository.csproj"
             }
           }
         }
@@ -7039,7 +7039,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

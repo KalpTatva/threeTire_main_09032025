@@ -53,36 +53,46 @@ public class MenuController : Controller
     {
         await FetchData();
         MenuWithItemsViewModel menu = await _menuService.GetAllCategory(categoryId, searchTerm, pageNumber, pageSize);
-        List<Modifiergroup>? result = await _menuService.GetAllModifier(modifierId, searchModifier);
-
+        MenuWithItemsViewModel menu2 = await _menuService.GetModifiers(modifierId, searchTerm, pageNumber, pageSize);
         ViewBag.SelectedCategoryId = categoryId;
-        menu.modifiergroups = result;
+        MenuWithItemsViewModel result = new MenuWithItemsViewModel
+        {
+            Categories = menu.Categories,
+            Items = menu.Items,
+            CurrentPage = menu.CurrentPage,
+            PageSize = menu.PageSize,
+            TotalItems = menu.TotalItems,
+            modifiergroups = menu2.modifiergroups,
+            Modifiers = menu2.Modifiers,
+            CurrentPage1 = menu2.CurrentPage1,
+            PageSize1 = menu2.PageSize1,
+            TotalItems1 = menu2.TotalItems1
+        };
         ViewBag.SelectedModifierId = modifierId;
 
-        return View(menu);
+        return View(result);
     }
 
     public async Task<IActionResult> FilterItems(int? categoryId = null, string? searchTerm = null, int pageNumber = 1, int pageSize = 5)
     {
         await FetchData();
         MenuWithItemsViewModel menu = await _menuService.GetAllCategory(categoryId, searchTerm, pageNumber, pageSize);
-
-        // Get total items count before pagination
-        int totalItems = menu.Items.Count;
-
-        // Apply pagination
-        menu.Items = menu.Items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-        menu.TotalItems = totalItems; // Ensure TotalItems is set
-
         return PartialView("_ItemsPartial", menu);
     }
 
+    public async Task<IActionResult> FilterModifiers(int? modifierGroupId = null, string? searchTerm = null, int pageNumber = 1, int pageSize = 5)
+    {
+        await FetchData();
+        MenuWithItemsViewModel menu = await _menuService.GetModifiers(modifierGroupId, searchTerm, pageNumber, pageSize);
+        return PartialView("_ModifiersPartial", menu);
+    }
 
 
     [HttpPost]
     public async Task<IActionResult> AddCategory(MenuWithItemsViewModel model)
     {
         await _menuService.AddCategoryService(model);
+        await FetchData();
         TempData["CategoryAdd"] = "Category added successfully";
         return RedirectToAction("Index");
     }
@@ -91,6 +101,7 @@ public class MenuController : Controller
     public async Task<IActionResult> AddModifierGroup(MenuWithItemsViewModel model)
     {
         await _menuService.AddModifierGroupService(model);
+        await FetchData();
         TempData["ModifierGroupAdd"] = "ModifierGroup added successfully";
         return RedirectToAction("Index");
     }
@@ -99,6 +110,7 @@ public class MenuController : Controller
     public async Task<IActionResult> EditCategory(MenuWithItemsViewModel model)
     {
         await _menuService.EditCategoryService(model);
+        await FetchData();
         TempData["CategoryAdd"] = "Category Edited successfully";
         return RedirectToAction("Index");
     }
@@ -107,6 +119,7 @@ public class MenuController : Controller
     public async Task<IActionResult> DeleteCategory(MenuWithItemsViewModel model)
     {
         await _menuService.DeleteCategoryService(model);
+        await FetchData();
         TempData["CategoryAdd"] = "Modifier Group Deleted successfully";
         return RedirectToAction("Index");
     }
@@ -115,6 +128,7 @@ public class MenuController : Controller
     public async Task<IActionResult> DeleteModifierGroup(MenuWithItemsViewModel model)
     {
         await _menuService.DeleteModifierGroupService(model);
+        await FetchData();
         TempData["ModifierGroupAdd"] = "Category Deleted successfully";
         return RedirectToAction("Index");
     }
@@ -126,8 +140,9 @@ public class MenuController : Controller
         if (viewModel.item == null)
         {
             // Handle null item case early
-            MenuWithItemsViewModel menu2 = await _menuService.GetAllCategory(0, "");
+            MenuWithItemsViewModel menu2 = await _menuService.GetAllCategory(0, "", 1, 5);
             menu2.item = viewModel.item;
+            await FetchData();
             ModelState.AddModelError("", "Item details are required.");
             return View("Index", menu2);
         }
@@ -144,14 +159,44 @@ public class MenuController : Controller
             catch (Exception ex)
             {
                 System.Console.WriteLine("error :" + ex.Message);
-                MenuWithItemsViewModel menu1 = await _menuService.GetAllCategory(0, "");
+                MenuWithItemsViewModel menu1 = await _menuService.GetAllCategory(0, "", 1, 5);
                 menu1.item = viewModel.item;
                 return RedirectToAction("Index", menu1);
             }
         }
-        MenuWithItemsViewModel menu = await _menuService.GetAllCategory(0, "");
+        MenuWithItemsViewModel menu = await _menuService.GetAllCategory(0, "", 1, 5);
         menu.item = viewModel.item;
         return RedirectToAction("Index", menu);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddModifier(MenuWithItemsViewModel viewModel)
+    {
+        if (viewModel.modifiersViewModel == null)
+        {
+            MenuWithItemsViewModel menu2 = await _menuService.GetModifiers(0, "", 1, 5);
+            menu2.modifiersViewModel = viewModel.modifiersViewModel;
+            ModelState.AddModelError("", "Item details are required.");
+            return View("Index", menu2);
+        }
+        if (viewModel.modifiersViewModel != null)
+        {
+            try
+            {
+                await FetchData();
+                await _menuService.AddModifierAsync(viewModel, ViewBag.Userid);
+            }
+            catch (Exception ex)
+            {
+
+                MenuWithItemsViewModel menu2 = await _menuService.GetModifiers(0, "", 1, 5);
+                menu2.modifiersViewModel = viewModel.modifiersViewModel;
+                ModelState.AddModelError("", "Item details are required.");
+                return View("Index", menu2);
+            }
+        }
+        return RedirectToAction("Index");
     }
 
 
@@ -202,7 +247,7 @@ public class MenuController : Controller
         // Early check for null item
         if (viewModel.item == null)
         {
-            MenuWithItemsViewModel menu = await _menuService.GetAllCategory(0, "");
+            MenuWithItemsViewModel menu = await _menuService.GetAllCategory(0, "", 1, 5);
             ModelState.AddModelError("", "Item details are required.");
             return View("Index", menu);
         }
@@ -218,9 +263,44 @@ public class MenuController : Controller
         catch (Exception ex)
         {
             System.Console.WriteLine("error :" + ex.Message);
-            MenuWithItemsViewModel menu1 = await _menuService.GetAllCategory(0, "");
+            MenuWithItemsViewModel menu1 = await _menuService.GetAllCategory(0, "", 1, 5);
             menu1.item = viewModel.item;
             return RedirectToAction("Index", menu1);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> IsAvailableUpdate(int itemId, bool available)
+    {
+        try
+        {
+            await FetchData();
+            int userId = ViewBag.Userid; // Consider dependency injection instead
+            Item? item = await _menuService.IsAvailabeUpdateAsync(itemId, available, userId);
+
+            if (item?.Isavailabe == available) // Added null check
+            {
+                return Json(new
+                {
+                    success = true,
+                    data = "Update completed successfully"
+                });
+            }
+
+            return Json(new
+            {
+                success = false,
+                data = "Update failed to apply"
+            });
+        }
+        catch (Exception e)
+        {
+            System.Console.WriteLine("Error in IsAvailableUpdate: " + e.Message);
+            return Json(new
+            {
+                success = false,
+                data = "An error occurred: " + e.Message
+            });
         }
     }
 

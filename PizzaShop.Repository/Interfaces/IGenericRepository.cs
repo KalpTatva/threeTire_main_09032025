@@ -23,5 +23,7 @@ public interface IGenericRepository<T> where T : class
     Task<List<Category>> GetAllCategoryAsync();
     Task<List<Modifiergroup>> GetAllModifierGroupAsync();
     Task<List<Item>> GetAllItemsAsync();
-    public Task<List<Item>> GetItemsByCategoryAsync(int? id);
+    Task<List<Modifier>> GetAllModifierAsync();
+    Task<List<Item>> GetItemsByCategoryAsync(int? id);
+    Task<List<Modifier>> GetModifiersByMGAsync(int? id);
 }
